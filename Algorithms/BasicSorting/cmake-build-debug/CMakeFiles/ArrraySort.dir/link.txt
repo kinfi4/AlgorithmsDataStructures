@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/ArrraySort.dir/main.cpp.o  -o ArrraySort 

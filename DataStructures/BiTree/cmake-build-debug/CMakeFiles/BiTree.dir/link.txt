@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/BiTree.dir/main.cpp.o  -o BiTree 

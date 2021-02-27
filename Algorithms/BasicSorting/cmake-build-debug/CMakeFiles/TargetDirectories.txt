@@ -1,3 +1,0 @@
-/home/kini4/c++/ArrraySort/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/kini4/c++/ArrraySort/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/kini4/c++/ArrraySort/cmake-build-debug/CMakeFiles/ArrraySort.dir
