@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/kini4/c++/MyDataStructures/LinkedList/MyList.h
+cmath
+-
+vector
+-
+functional
+-
+
+/home/kini4/c++/MyDataStructures/LinkedList/main.cpp
+iostream
+-
+MyList.h
+/home/kini4/c++/MyDataStructures/LinkedList/MyList.h
+functional
+-
+algorithm
+-
+

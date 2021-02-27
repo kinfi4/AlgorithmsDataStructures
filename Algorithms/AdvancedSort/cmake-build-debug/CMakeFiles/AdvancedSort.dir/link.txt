@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/AdvancedSort.dir/main.cpp.o  -o AdvancedSort 

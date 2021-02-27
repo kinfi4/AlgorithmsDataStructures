@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/kini4/c++/AdvancedSort/main.cpp
+iostream
+-
+ctime
+-
+vector
+-
+cmath
+-
+algorithm
+-
+
