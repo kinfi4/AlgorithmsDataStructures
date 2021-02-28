@@ -1,34 +1,41 @@
 #include <iostream>
-#include "MyList.h"
 #include <functional>
 #include <algorithm>
+#include "sorting_tests.h"
+#include "filter_test.h"
+#include "pushing_seting_geting_tests.h"
+#include "extending_tests.h"
+#include "count_tests.h"
+#include "indexing_test.h"
+#include "remove_tests.h"
+
+#include "MyList.h"
 
 using namespace std;
 
 int main() {
-    auto list = MyList<string>();
-    auto list2 = MyList<string>();
+    test_pushing_back_and_front();
+    test_get_set_operator();
+    test_index_operator();
+    test_inserting();
 
-    list.push_back("Hello1");
-    list.push_back("Hell2");
-    list2.push_back("Hell3");
-    list2.push_back("Hello4");
+    test_extending();
+    test_concatenating();
 
-    list.extend(list2);
+    test_sorting_with_key();
+    test_sorting_without_key();
 
+    test_filtering();
 
-    auto new_list = list.copy();
-    new_list.push_back("Some data in new list");
-    new_list.set(0, "new Value");
+    test_count();
+    test_count_if();
 
-    for (int i = 0; i < new_list.size(); ++i) {
-        cout << new_list[i] << " ";
-    }
-    cout << endl;
+    test_swapping();
+    test_contains();
+    test_indexing();
 
-    for (int i = 0; i < list.size(); ++i) {
-        cout << list[i] << " ";
-    }
+    test_remove();
+    test_remove_if();
 
     return 0;
 }

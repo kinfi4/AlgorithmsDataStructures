@@ -5,6 +5,10 @@
 #include <vector>
 #include <functional>
 
+
+#ifndef STUDENT_H
+#define STUDENT_H
+
 using namespace std;
 
 template <class T>
@@ -15,11 +19,11 @@ public:
 
     void push_back(T data);
     void push_front(T data);
-    int remove(T value);
     T pop(int index = -1);
     T& operator[](int index);
     int size();
     void sort(bool reverse=false);
+    void sort_by_key(function<bool(T, T)>);
     void clear();
     void extend(MyList<T>& list);
 
@@ -27,14 +31,20 @@ public:
     int index(T value);
     void insert(int index, T value);
     void swap(int index1, int index2);
-    int count(T value);
+
     MyList<T> filter(function<bool(T)>);
+
+    int count(T value);
     int count_if(function<bool(T)>);
+
+    int remove(T value);
+    void remove_if(function<bool(T)>);
+
     MyList<T> copy();
     void set(int index, T value);
     T get(int index);
 
-    static MyList<T> concat_lists(MyList<T> list1, MyList<T> list2);
+    static MyList<T> concat_lists(MyList<T> &list1, MyList<T> &list2);
 
 private:
     template<class T1>
@@ -157,6 +167,19 @@ void MyList<T>::sort(bool reverse) {
 }
 
 template<class T>
+void MyList<T>::sort_by_key(function<bool(T, T)> compare) {
+    for (int i = 0; i < this->size() - 1; ++i) {
+        for (int j = 0; j < this->size() - i - 1; ++j) {
+            if(not compare((*this)[j], (*this)[j + 1])){
+                T temp = (*this)[j];
+                (*this)[j] = (*this)[j+1];
+                (*this)[j+1] = temp;
+            }
+        }
+    }
+}
+
+template<class T>
 void MyList<T>::clear() {
     while(this->size()){
         this->pop();
@@ -264,12 +287,12 @@ int MyList<T>::index(T value) {
 }
 
 template<class T>
-MyList<T> MyList<T>::concat_lists(MyList<T> list1, MyList<T> list2) {
-    auto new_list = MyList<T>();
-    new_list.extend(list1);
-    new_list.extend(list2);
+MyList<T> MyList<T>::concat_lists(MyList<T> &list1, MyList<T> &list2) {
+    auto new_list = new MyList<T>();
+    new_list->extend(list1);
+    new_list->extend(list2);
 
-    return new_list;
+    return *new_list;
 }
 
 template<class T>
@@ -310,7 +333,6 @@ void MyList<T>::swap(int index1, int index2) {
     }
 
     std::swap(node1->data, node2->data);
-
 }
 
 template<class T>
@@ -410,3 +432,18 @@ void MyList<T>::set(int index, T value) {
     current->data = value;
 
 }
+
+template<class T>
+void MyList<T>::remove_if(function<bool(T)> predicate) {
+    auto cur_node = this->head;
+    while(cur_node != nullptr){
+        auto next_node = cur_node->pNext;
+        if(predicate(cur_node->data))
+            this->delete_node(cur_node);
+
+        cur_node = next_node;
+    }
+}
+
+#endif
+
