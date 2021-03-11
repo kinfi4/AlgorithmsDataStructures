@@ -50,7 +50,7 @@ void test_contains(){
     assert(list.contains("First"));
     assert(not list.contains("Forth"));
 
-    cout << "test_swapping passed well" << endl;
+    cout << "test_contains passed well" << endl;
 }
 
 

@@ -36,7 +36,7 @@ void test_remove(){
     assert(not list.contains(3));
     assert(list.count(5) == 1);
 
-    cout << "test_remove_if passed well" << endl;
+    cout << "test_remove passed well" << endl;
 }
 
 

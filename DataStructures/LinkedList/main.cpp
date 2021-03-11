@@ -1,6 +1,5 @@
 #include <iostream>
-#include <functional>
-#include <algorithm>
+
 #include "sorting_tests.h"
 #include "filter_test.h"
 #include "pushing_seting_geting_tests.h"
