@@ -1,15 +1,14 @@
 //
-// Created by kini4 on 3/11/21.
+// Created by kini4 on 3/15/21.
 //
 
-#ifndef STACK_STACK_H
-#define STACK_STACK_H
-
+#ifndef STACK_QUEUE_H
+#define STACK_QUEUE_H
 template <class T>
-class Stack{
+class Queue{
 public:
-    Stack(){
-        this->cur_tail = nullptr;
+    Queue(){
+        this->cur_head = nullptr;
         this->_size = 0;
     }
 
@@ -26,44 +25,50 @@ private:
     public:
         Node(T1 data){
             this->data = data;
-            this->prev_node = nullptr;
+            this->next_node = nullptr;
         }
 
         T1 data;
-        Node<T1>* prev_node;
+        Node<T1>* next_node;
     };
 
-    Node<T>* cur_tail;
+    Node<T>* cur_head;
     int _size;
 
 };
 
 template<class T>
-bool Stack<T>::is_empty() {
-    return this->_size <= 0;
+bool Queue<T>::is_empty() {
+    return this->_size == 0;
 }
 
 template<class T>
-int Stack<T>::size() {
+int Queue<T>::size() {
     return this->_size;
 }
 
 template<class T>
-void Stack<T>::push(T data) {
+void Queue<T>::push(T data) {
     auto* new_node = new Node<T>(data);
-    new_node->prev_node = this->cur_tail;
-    this->cur_tail = new_node;
+    new_node->next_node = this->cur_head;
+    this->cur_head = new_node;
 
     this->_size++;
 }
 
 template<class T>
-T Stack<T>::pop() {
+T Queue<T>::look() {
+    return this->cur_head->data;
+}
+
+template<class T>
+T Queue<T>::pop() {
     if(this->is_empty()){
         throw "stack is empty!";
     }
-    auto temp = this->cur_tail;
-    this->cur_tail = this->cur_tail->prev_node;
+
+    auto temp = this->cur_head;
+    this->cur_head = this->cur_head->next_node;
 
     auto data = temp->data;
     delete temp;
@@ -72,9 +77,4 @@ T Stack<T>::pop() {
     return data;
 }
 
-template<class T>
-T Stack<T>::look() {
-    return this->cur_tail->data;
-}
-
-#endif //STACK_STACK_H
+#endif //STACK_QUEUE_H

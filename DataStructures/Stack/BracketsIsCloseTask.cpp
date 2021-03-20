@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include "Queue.h"
 #include "Stack.h"
 
 using namespace std;
@@ -55,6 +56,17 @@ int main() {
     for(auto value : test){
         cout << value << " -- " << bool(brackets_are_close(value)) << endl;
     }
+
+// HOW STACK WORKS
+//    auto stack = Stack<int>();
+//    for (int i = 0; i < 10; ++i) {
+//        stack.push(i);
+//    }
+//
+//    while(not stack.is_empty()){
+//        cout << stack.pop() << endl;
+//    }
+
 
     return 0;
 }
