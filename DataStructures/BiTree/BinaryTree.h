@@ -13,7 +13,7 @@ using namespace std;
 
 
 template <class T, class D>
-class BinaryTree{
+class BinaryTree {
 public:
     BinaryTree();
 
@@ -27,6 +27,8 @@ public:
     static BinaryTree<T, D> tree_from_vector(vector<pair<T, D>> nodes);
     static BinaryTree<T, D> tree_from_vector(vector<Node<T, D>> nodes);
     bool index_exists(T index);
+    vector<T> keys();
+    vector<D> values();
 
     D operator[](T index);
 
@@ -42,6 +44,8 @@ private:
     void _delete_subtree(Node<T, D>* root);
 
     void _check_the_comparability();
+    void _find_keys(Node<T, D>* root, vector<T>& keys);
+    void _find_values(Node<T, D>* root, vector<D>& values);
 };
 
 template<class T, class D>
@@ -223,6 +227,44 @@ bool BinaryTree<T, D>::_index_exists(Node<T, D>* root, T index) {
 template<class T, class D>
 D BinaryTree<T, D>::operator[](T index) {
     return find_element(index);
+}
+
+template<class T, class D>
+vector<T> BinaryTree<T, D>::keys() {
+    auto _keys = vector<T>();
+    _find_keys(this->root, _keys);
+
+    return _keys;
+}
+
+template<class T, class D>
+void BinaryTree<T, D>::_find_keys(Node<T, D> *root, vector<T>& _keys) {
+    if(root == nullptr)
+        return;
+
+    _find_keys(root->left_child, _keys);
+    _find_keys(root->right_child, _keys);
+
+    _keys.push_back(root->index);
+}
+
+template<class T, class D>
+vector<D> BinaryTree<T, D>::values() {
+    auto values = vector<D>();
+    _find_values(this->root, values);
+
+    return values;
+}
+
+template<class T, class D>
+void BinaryTree<T, D>::_find_values(Node<T, D>* root, vector<D>& values) {
+    if(root == nullptr)
+        return;
+
+    _find_keys(root->left_child, values);
+    _find_keys(root->right_child, values);
+
+    values.push_back(root->data);
 }
 
 

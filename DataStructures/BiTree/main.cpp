@@ -1,6 +1,5 @@
 #include <iostream>
 #include "BinaryTree.h"
-#include <map>
 
 #include "tests/adding_nodes_tests.h"
 #include "tests/factory_method_tests.h"
@@ -8,6 +7,7 @@
 #include "tests/clearing_tests.h"
 #include "tests/removing_tests.h"
 #include "tests/index_existing_tests.h"
+#include "tests/keys_and_values_tests.h"
 
 using namespace std;
 
@@ -21,9 +21,8 @@ int main() {
     test_tree_from_vector();
     test_index_existing();
     test_removing();
-
-
-    auto tree = map<int, int>();
+    test_keys();
+    test_values();
 
 
     return 0;
