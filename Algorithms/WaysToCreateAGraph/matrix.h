@@ -75,6 +75,54 @@ public:
         return list_edges;
     }
 
+protected:
+    vector<T> names;
+    vector<string> edges_names;
+    vector<vector<int>> matrix;
+};
+
+template <class T>
+class MatrixIncidenceDirected: public BaseMatrixIncidence<T>{
+public:
+    MatrixIncidenceDirected(vector<vector<int>>& matrix){
+        this->matrix = matrix;
+    }
+
+    MatrixAdjacencyUndirected<T> create_adjacency_matrix() {
+        auto matrix = vector<vector<int>>();
+
+        auto node_edges = vector<pair<int, int>>();
+        for (int i = 0; i < this->matrix.size(); ++i) {
+            for (int j = 0; j < this->matrix[i].size(); ++j) {
+                if (this->matrix[i][j] > 0) {
+                    auto edge = _find_indexes_of_edge(this->edges_names[j]);
+                    node_edges.push_back(edge);
+                }
+            }
+        }
+
+        for (int i = 0; i < this->matrix.size(); ++i) {
+            auto values = vector<int>();
+            for (int j = 0; j < this->matrix.size(); ++j) {
+                bool found = false;
+                for(auto pair : node_edges){
+                    if(i == pair.first and j == pair.second){
+                        values.push_back(1);
+                        found = true;
+                        break;
+                    }
+                }
+
+                if(not found)
+                    values.push_back(0);
+            }
+            matrix.push_back(values);
+        }
+
+        auto graph = MatrixAdjacencyUndirected<T>(matrix);
+        graph.add_names(this->names);
+        return graph;
+    }
     ListAdjacency<T> get_list_adjacency(){
         auto pairs = vector<pair<T, vector<T>>>();
         for (int i = 0; i < this->matrix.size(); ++i) {
@@ -95,26 +143,21 @@ public:
         return list_adjacency;
     }
 
+private:
+    pair<int, int> _find_indexes_of_edge(string edge){
+        string edge1, edge2;
+        edge1 += edge[0];
+        edge2 += edge[2];
 
-protected:
-    vector<T> names;
-    vector<string> edges_names;
-    vector<vector<int>> matrix;
-};
-
-template <class T>
-class MatrixIncidenceDirected: public BaseMatrixIncidence<T>{
-public:
-    MatrixIncidenceDirected(vector<vector<int>>& matrix){
-        this->matrix = matrix;
-    }
-    MatrixAdjacencyDirected<T> create_adjacency_matrix(){
-        for (int i = 0; i < this->matrix.size(); ++i) {
-            auto node_edges = vector<int>();
-            for (int j = 0; j < this->matrix[i].size(); ++j) {
-
-            }
+        int index1 = 0, index2 = 0;
+        for (int i = 0; i < this->names.size(); ++i) {
+            if(this->names[i] == edge1)
+                index1 = i;
+            if(this->names[i] == edge2)
+                index2 = i;
         }
+
+        return pair<int, int>(index1, index2);
     }
 };
 template <class T>
@@ -123,17 +166,89 @@ public:
     MatrixIncidenceUndirected(vector<vector<int>>& matrix){
         this->matrix = matrix;
     }
-    MatrixAdjacencyUndirected<T> create_adjacency_matrix(){
-        for (int i = 0; i < this->matrix.size(); ++i) {
-            auto node_edges = vector<int>();
-            for (int j = 0; j < this->matrix[i].size(); ++j) {
+    MatrixAdjacencyUndirected<T> create_adjacency_matrix() {
+        auto matrix = vector<vector<int>>();
 
+        auto node_edges = vector<pair<int, int>>();
+        for (int i = 0; i < this->matrix.size(); ++i) {
+            for (int j = 0; j < this->matrix[i].size(); ++j) {
+                if (this->matrix[i][j] > 0) {
+                    auto edge = _find_indexes_of_edge(this->edges_names[j]);
+                    node_edges.push_back(edge);
+                }
             }
         }
+
+//        cout << "DEBUG" << endl;
+//        for(auto v : node_edges){
+//            cout << v.first << v.second << " ";
+//        }
+//        cout << endl;
+
+        for (int i = 0; i < this->matrix.size(); ++i) {
+            auto values = vector<int>();
+            for (int j = 0; j < this->matrix.size(); ++j) {
+                bool found = false;
+                for(auto pair : node_edges){
+                    if(i == pair.first and j == pair.second or i == pair.second and j == pair.first){
+//                        cout << "Found " << i << " " << j << " ---- ";
+                        values.push_back(1);
+                        found = true;
+                        break;
+                    }
+                }
+
+                if(not found)
+                    values.push_back(0);
+            }
+            matrix.push_back(values);
+        }
+
+        auto graph = MatrixAdjacencyUndirected<T>(matrix);
+        graph.add_names(this->names);
+        return graph;
     }
+    ListAdjacency<T> get_list_adjacency(){
+        auto pairs = vector<pair<T, vector<T>>>();
+        for (int i = 0; i < this->matrix.size(); ++i) {
+            auto neighbors = vector<T>();
+            for (int j = 0; j < this->matrix[i].size(); ++j) {
+                if(this->matrix[i][j] > 0){
+                    string neighbor1, neighbor2;
+                    neighbor1 += this->edges_names[j][2];
+                    neighbor2 += this->edges_names[j][0];
+
+                    string neighbor = neighbor1 == this->names[i] ? neighbor2: neighbor1;
+
+                    neighbors.push_back(neighbor);
+                }
+            }
+
+            pairs.emplace_back(this->names[i], neighbors);
+        }
+
+        auto list_adjacency = ListAdjacency<T>(pairs);
+        return list_adjacency;
+    }
+
+private:
+    pair<int, int> _find_indexes_of_edge(string edge){
+        string edge1, edge2;
+        edge1 += edge[0];
+        edge2 += edge[2];
+
+        int index1 = 0, index2 = 0;
+        for (int i = 0; i < this->names.size(); ++i) {
+            if(this->names[i] == edge1)
+                index1 = i;
+            if(this->names[i] == edge2)
+                index2 = i;
+        }
+
+        return pair<int, int>(index1, index2);
+    }
+
 };
-
-
 
 
 
@@ -146,15 +261,20 @@ public:
     void print(){
         cout << "   ";
         for(auto name : this->names)
-            cout << name << ' ';
+            cout << " " << name << " ";
 
         cout << endl;
 
         for (int i = 0; i < this->matrix.size(); ++i) {
             cout << this->names[i] << "  ";
 
-            for(auto value : this->matrix[i])
-                cout << value << " ";
+            for(auto value : this->matrix[i]){
+                if(value >= 0)
+                    cout << " " << value << " ";
+                else
+                    cout << value << " ";
+            }
+
 
             cout << endl;
         }
@@ -245,7 +365,6 @@ public:
         return new_graph;
     }
 };
-
 template <class T>
 class MatrixAdjacencyUndirected: public BaseMatrixAdjacency<T>{
 public:
