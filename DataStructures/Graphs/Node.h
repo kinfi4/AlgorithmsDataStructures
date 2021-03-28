@@ -4,22 +4,18 @@
 
 #ifndef GRAPH_NODE_H
 #define GRAPH_NODE_H
-#include "BaseGraph.h"
 
 template <class T, class D>
 class Node{
 public:
-    Node(T name, D data, BaseGraph<T>* graph);
+    Node(T name, D data);
 
-private:
-    BaseGraph<T>* graph;
     D data;
     T name;
 };
 
 template<class T, class D>
-Node<T, D>::Node(T name, D data, BaseGraph<T>* graph) {
-    this->graph = graph;
+Node<T, D>::Node(T name, D data) {
     this->data = data;
     this->name = name;
 }

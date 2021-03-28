@@ -7,7 +7,7 @@
 template<class T1, class T2>
 class Node {
 public:
-    Node(T1 index, T2 data, Node<T1, T2> *parent, Node<T1, T2>* left_child= nullptr, Node<T1, T2>* right_child= nullptr){
+    Node(T1 &index, T2 &data, Node<T1, T2> *parent, Node<T1, T2>* left_child= nullptr, Node<T1, T2>* right_child= nullptr){
         this->index = index;
         this->data = data;
 

@@ -250,10 +250,10 @@ void BinaryTree<T, D>::_find_keys(Node<T, D> *root, vector<T>& _keys) {
 
 template<class T, class D>
 vector<D> BinaryTree<T, D>::values() {
-    auto values = vector<D>();
-    _find_values(this->root, values);
+    auto _values = vector<D>();
+    _find_values(this->root, _values);
 
-    return values;
+    return _values;
 }
 
 template<class T, class D>
@@ -261,8 +261,8 @@ void BinaryTree<T, D>::_find_values(Node<T, D>* root, vector<D>& values) {
     if(root == nullptr)
         return;
 
-    _find_keys(root->left_child, values);
-    _find_keys(root->right_child, values);
+    _find_values(root->left_child, values);
+    _find_values(root->right_child, values);
 
     values.push_back(root->data);
 }
