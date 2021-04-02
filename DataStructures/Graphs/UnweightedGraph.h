@@ -5,7 +5,7 @@
 #ifndef GRAPH_UNDIRECTEDGRAPH_H
 #define GRAPH_UNDIRECTEDGRAPH_H
 #include "Node.h"
-#include "BaseGraph.h"
+#include "BaseUnweightedGraph.h"
 #include <vector>
 #include <queue>
 #include <stack>
@@ -13,9 +13,9 @@
 using namespace std;
 
 template <class T>
-class UnWeightedGraph: public BaseGraph<T>{
+class UnweightedGraph: public BaseUnweightedGraph<T>{
 public:
-    UnWeightedGraph(vector<vector<int>> matrix, vector<T> names){
+    UnweightedGraph(vector<vector<int>> matrix, vector<T> names){
         if(matrix.size() != names.size())
             throw invalid_argument("Matrix size must be equal to names size");
 

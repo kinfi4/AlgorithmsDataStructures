@@ -2,8 +2,8 @@
 // Created by kinfi4 on 4/2/21.
 //
 
-#ifndef GRAPHS_BASEGRAPH_H
-#define GRAPHS_BASEGRAPH_H
+#ifndef GRAPHS_BASEUNWEIGHTEDGRAPH_H
+#define GRAPHS_BASEUNWEIGHTEDGRAPH_H
 
 #include "Node.h"
 #include <vector>
@@ -11,7 +11,7 @@
 using namespace std;
 
 template <class T>
-class BaseGraph{
+class BaseUnweightedGraph{
 public:
     void print(){
         for(auto& pair : this->_graph){
@@ -55,4 +55,4 @@ protected:
 
 };
 
-#endif //GRAPHS_BASEGRAPH_H
+#endif //GRAPHS_BASEUNWEIGHTEDGRAPH_H
