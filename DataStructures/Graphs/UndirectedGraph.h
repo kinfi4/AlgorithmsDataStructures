@@ -5,130 +5,84 @@
 #ifndef GRAPH_UNDIRECTEDGRAPH_H
 #define GRAPH_UNDIRECTEDGRAPH_H
 #include "Node.h"
+#include "BaseGraph.h"
 #include <vector>
-#include <string>
+#include <queue>
+#include <stack>
 
 using namespace std;
 
-template <class T, class D>
-class UndirectedGraph{
+template <class T>
+class UnWeightedGraph: public BaseGraph<T>{
 public:
+    UnWeightedGraph(vector<vector<int>> matrix, vector<T> names){
+        if(matrix.size() != names.size())
+            throw invalid_argument("Matrix size must be equal to names size");
 
-    int size();
-    bool is_empty();
+        auto new_nodes = vector<Node<T>*>();
+        for (int i = 0; i < matrix.size(); ++i) {
+            new_nodes.push_back(new Node<T>(names[i]));
+        }
 
-    UndirectedGraph(){
-        this->_size = 0;
+        for (int i = 0; i < matrix.size(); ++i) {
+            auto neighbors = vector<Node<T>*>();
+            for (int j = 0; j < matrix[i].size(); ++j) {
+                if(matrix[i][j] > 0){
+                    neighbors.push_back(new_nodes[j]);
+                }
+            }
+
+            this->_graph.push_back(pair<Node<T>*, vector<Node<T>*>>(new_nodes[i], neighbors));
+        }
     }
 
-    UndirectedGraph(vector<pair<Node<T, D>*, vector<Node<T, D>*>>> graph){
-        this->_graph = graph;
+    void bfs(T start_node){
+        queue<Node<T>*> queue;
+        auto visited = vector<T>();
+
+        queue.push(this->_find_node_by_name(start_node));
+        visited.push_back(start_node);
+
+        while (not queue.empty()){
+            auto cur_node_name = queue.front()->name;
+            cout << cur_node_name << " -> ";
+
+            queue.pop();
+
+            for(auto& node : this->_get_node_neighbors(cur_node_name)){
+                if(not this->_is_visited(node->name, visited)){
+                    visited.push_back(node->name);
+                    queue.push(node);
+                }
+            }
+        }
     }
 
-    void add_node(T name, D data);
-    void add_nodes_from_vector(vector<pair<T, D>> nodes);
+    void dfs(T start_node){
+        stack<Node<T>*> stack;
+        auto visited = vector<T>();
 
-    void add_edge(T name1, T name2);
-    void add_edges_from_vector(vector<pair<T, T>> nodes);
+        stack.push(this->_find_node_by_name(start_node));
 
-    vector<vector<bool>> get_matrix_adjacency();
+        while(not stack.empty()){
+            auto cur_node_name = stack.top()->name;
+            stack.pop();
 
-    static UndirectedGraph<int, D> graph_from_matrix_adjacency(vector<vector<bool>> matrix);
-    static UndirectedGraph<T, D> graph_from_list(vector<pair<Node<T, D>*, vector<Node<T, D>*>>> graph);
-private:
-    vector<pair<Node<T, D>*, vector<Node<T, D>*>>> _graph;
-    int _size;
+            if(not this->_is_visited(cur_node_name, visited)){
+                cout << cur_node_name << " -> ";
+                visited.push_back(cur_node_name);
+            }
 
-    Node<T, D>* _find_node(T name);
+            for(auto& node : this->_get_node_neighbors(cur_node_name)){
+                if(not this->_is_visited(node->name, visited)){
+                    stack.push(node);
+                }
+            }
+        }
+    }
+
 };
 
-template<class T, class D>
-void UndirectedGraph<T, D>::add_node(T name, D data) {
-    this->_graph.push_back(pair<Node<T, D>*, vector<Node<T, D>*>>(new Node<T, D>(name, data), vector<Node<T, D>*>()));
-}
-
-template<class T, class D>
-void UndirectedGraph<T, D>::add_nodes_from_vector(vector<pair<T, D>> nodes) {
-    for(auto pair : nodes){
-        this->add_node(pair.first, pair.second);
-    }
-}
-
-template<class T, class D>
-void UndirectedGraph<T, D>::add_edge(T name1, T name2) {
-    Node<T, D>* node1;
-    try{
-        node1 = this->_find_node(name2);
-    }catch (...){
-        throw invalid_argument("Cant find the node or nodes with this name/names");
-    }
-
-    for(auto block : this->_graph){
-        if(block.first->name == name1){
-            block.second.push_back(node1);
-            return;
-        }
-    }
-
-    throw invalid_argument("Cant find the node or nodes with this name/names");
-}
-
-template<class T, class D>
-Node<T, D> *UndirectedGraph<T, D>::_find_node(T name) {
-    for(auto block : this->_graph){
-        if(block.first->name == name){
-            return block.first;
-        }
-    }
-
-    throw invalid_argument("Cant find the node with this name");
-}
-
-template<class T, class D>
-void UndirectedGraph<T, D>::add_edges_from_vector(vector<pair<T, T>> nodes) {
-    for(auto pair : nodes){
-        this->add_edge(pair.first, pair.second);
-    }
-}
-
-template<class T, class D>
-UndirectedGraph<T, D> UndirectedGraph<T, D>::graph_from_list(vector<pair<Node<T, D> *, vector<Node<T, D> *>>> graph) {
-    return UndirectedGraph<T, D>(graph);
-}
-
-template<class T, class D>
-UndirectedGraph<int, D> UndirectedGraph<T, D>::graph_from_matrix_adjacency(vector<vector<bool>> matrix) {
-    auto graph = UndirectedGraph<int, D>();
-
-    for(int i = 0; i < matrix.size(); i++)
-        graph.add_node(i, D());
-
-    for(int k = 0; k < matrix.size(); k++){
-        for(int i = 0; i < matrix[k].size(); i++){
-            if(matrix[k][i])
-                graph.add_edge(k, i);
-        }
-    }
-
-    return graph;
-}
-
-template<class T, class D>
-int UndirectedGraph<T, D>::size() {
-    return this->_size;
-}
-
-template<class T, class D>
-bool UndirectedGraph<T, D>::is_empty() {
-    return this->_size == 0;
-}
-
-template<class T, class D>
-vector<vector<bool>> UndirectedGraph<T, D>::get_matrix_adjacency() {
-    auto matrix = vector<vector<bool>>();
-
-
-}
 
 
 #endif //GRAPH_UNDIRECTEDGRAPH_H

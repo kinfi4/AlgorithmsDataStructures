@@ -33,31 +33,30 @@ void undirected_task(){
 
 void directed_task(){
     auto matrix = vector<vector<int>>{
-            {  0,  1,  1,  0,  1},
-            {  0,  0,  0,  1,  1},
-            {  0,  0,  0,  0,  1},
-            {  0,  0,  1,  0,  0},
-            {  0,  0,  0,  1,  0},
+            {  0,  1,  1,  0,  1 },
+            {  0,  0,  0,  1,  1 },
+            {  0,  0,  0,  0,  1 },
+            {  0,  0,  1,  0,  0 },
+            {  0,  0,  0,  1,  0 },
     };
 
-    auto undir_graph = MatrixAdjacencyDirected<string>(matrix);
-    undir_graph.add_names(vector<string>{"a", "b", "c", "d", "f"});
-    undir_graph.print();
+    auto adj_graph = MatrixAdjacencyDirected<string>(matrix);
+    adj_graph.add_names(vector<string>{"a", "b", "c", "d", "f"});
+    adj_graph.print();
 
-    auto dir_graph = undir_graph.create_incidence_matrix();
-    dir_graph.print();
+    auto inci_graph = adj_graph.create_incidence_matrix();
+    inci_graph.print();
 
-    dir_graph.get_list_adjacency().print();
-    dir_graph.get_list_edges().print();
+    inci_graph.create_adjacency_matrix().print();
 
-    dir_graph.create_adjacency_matrix().print();
-
+    inci_graph.get_list_adjacency().print();
+    adj_graph.get_list_edges().print();
 }
 
 
 int main() {
-
-    directed_task();
+    undirected_task();
+//    directed_task();
 
     return 0;
 }

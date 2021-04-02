@@ -4,14 +4,23 @@
 using namespace std;
 
 int main() {
+    auto matrix = vector<vector<int>>{
+            {  0,  1,  1,  0,  1 },
+            {  0,  0,  0,  1,  1 },
+            {  0,  0,  0,  0,  1 },
+            {  0,  0,  1,  0,  0 },
+            {  0,  0,  0,  1,  0 },
+    }; 
+    auto names = vector<string>{"a", "b", "c", "d", "f"};
 
-    auto g = UndirectedGraph<int, int>();
-    g.add_node(3, 5);
-    g.add_node(1, 5);
-    g.add_node(2, 5);
+    auto graph = UnWeightedGraph<string>(matrix, names);
+    graph.print();
 
-    g.add_edge(1, 2);
-    g.add_edge(1, 3);
+    cout << "BFS:: ";
+    graph.bfs("a");
+
+    cout << endl << "DFS:: ";
+    graph.dfs("a");
 
     return 0;
 }

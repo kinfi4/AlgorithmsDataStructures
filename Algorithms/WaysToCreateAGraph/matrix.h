@@ -247,7 +247,6 @@ private:
 
         return pair<int, int>(index1, index2);
     }
-
 };
 
 

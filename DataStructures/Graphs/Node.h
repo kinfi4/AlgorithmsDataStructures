@@ -5,19 +5,15 @@
 #ifndef GRAPH_NODE_H
 #define GRAPH_NODE_H
 
-template <class T, class D>
+template <class T>
 class Node{
 public:
-    Node(T name, D data);
+    Node(T name){
+        this->name = name;
+    }
 
-    D data;
     T name;
 };
 
-template<class T, class D>
-Node<T, D>::Node(T name, D data) {
-    this->data = data;
-    this->name = name;
-}
 
 #endif //GRAPH_NODE_H
