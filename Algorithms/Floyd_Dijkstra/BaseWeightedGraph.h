@@ -14,7 +14,7 @@ class BaseWeightedGraph{
 public:
     void print(){
         for (int i = 0; i < this->weights.size(); ++i) {
-            cout << this->names[i] << ": " << endl;
+            cout << this->names[i] << ": ";
             cout << "\t";
 
             for (int j = 0; j < this->weights.size(); ++j) {
