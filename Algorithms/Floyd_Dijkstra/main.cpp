@@ -5,9 +5,15 @@
 using namespace std;
 
 
-void _print_matrix(vector<vector<int>> matrix){
-    for(auto& row : matrix){
-        for(auto& el : row){
+void _print_matrix(vector<vector<int>> matrix, vector<string> names){
+    for(auto& name : names)
+        cout << "    " << name << "";
+
+    cout << endl << endl;
+
+    for(int i = 0; i < matrix.size(); ++i){
+        cout << names[i] << "   ";
+        for(auto& el : matrix[i]){
             if(el == INT_MAX)
                 cout << "inf" << "  ";
             else
@@ -46,7 +52,7 @@ void weighted_graph(){
 
     cout << endl;
     cout << "========================================" << endl;
-    _print_matrix(graph.floyd());
+    _print_matrix(graph.floyd(), {"a", "b", "c", "d", "e", "f"});
 }
 
 
