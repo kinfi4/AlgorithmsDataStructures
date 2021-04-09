@@ -38,8 +38,17 @@ public:
             cout << endl;
         }
     }
-    SquareMatrix& get_inverse_matrix(){
+    SquareMatrix get_inverse_matrix(){
+        auto inverse_matrix = SquareMatrix(this->ndim);
+        for (int i = 0; i < inverse_matrix.ndim; ++i) {
+            for (int j = 0; j < inverse_matrix.ndim; ++j) {
+                inverse_matrix[j][i] = pow(-1, i + j) * this->_get_det_for_minor(vector<int>{i}, vector<int>{j});
+            }
+        }
 
+        inverse_matrix / this->get_determinant();
+
+        return inverse_matrix;
     }
     double get_determinant(){
         double res = 0;
@@ -112,6 +121,16 @@ public:
             this->matrix[i][i] /= value;
         }
     }
+    void operator * (double number){
+        for(auto& row : this->matrix)
+            for(auto& value : row)
+                value *= number;
+    }
+    void operator / (double number){
+        for(auto& row : this->matrix)
+            for(auto& value : row)
+                value /= number;
+    }
 
 private:
     int ndim;
@@ -153,7 +172,6 @@ private:
                 }
         }
     }
-
 };
 
 #endif //MATRIX_MATRIX_H

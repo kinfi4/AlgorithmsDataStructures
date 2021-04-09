@@ -4,18 +4,15 @@
 using namespace std;
 
 int main() {
-    auto matrix = SquareMatrix(4, 1);
+    auto matrix = SquareMatrix(2, 5);
 
     matrix[0][0] = 12;
-    matrix[1][1] = 12;
-    matrix[2][1] = 35;
-    matrix[3][3] = 55;
-    matrix++;
-    matrix++;
+    matrix[1][1] = 15;
     matrix--;
     matrix.print_matrix();
-    cout << matrix.get_determinant();
-//    cout << matrix[0][0] << endl;
+    cout << endl;
+
+    matrix.get_inverse_matrix().print_matrix();
 
     return 0;
 }
