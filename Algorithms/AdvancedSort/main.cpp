@@ -237,25 +237,25 @@ int main() {
     times_130000.push_back(test_sorting_speed(merge_sort, 130000, false));
     cout << "End merge sorting" << endl;
 
-    cout << "Start stl sorting" << endl;
-    times_1300.push_back(test_sorting_speed(stl_sort, 1300, false));
-    times_13000.push_back(test_sorting_speed(stl_sort, 13000, false));
-    times_130000.push_back(test_sorting_speed(stl_sort, 130000, false));
-    cout << "End stl sorting" << endl;
-
-    cout << "Start Radix sorting" << endl;
-    times_1300.push_back(test_sorting_speed(radixsort, 1300, false));
-    times_13000.push_back(test_sorting_speed(radixsort, 13000, false));
-    times_130000.push_back(test_sorting_speed(radixsort, 130000, false));
-    cout << "End Radix sorting" << endl << endl << endl;
+//    cout << "Start stl sorting" << endl;
+//    times_1300.push_back(test_sorting_speed(stl_sort, 1300, false));
+//    times_13000.push_back(test_sorting_speed(stl_sort, 13000, false));
+//    times_130000.push_back(test_sorting_speed(stl_sort, 130000, false));
+//    cout << "End stl sorting" << endl;
+//
+//    cout << "Start Radix sorting" << endl;
+//    times_1300.push_back(test_sorting_speed(radixsort, 1300, false));
+//    times_13000.push_back(test_sorting_speed(radixsort, 13000, false));
+//    times_130000.push_back(test_sorting_speed(radixsort, 130000, false));
+//    cout << "End Radix sorting" << endl << endl << endl;
 
 
 
     cout << "Heap sorting:  " << times_1300[0] << "ms  " << times_13000[0] << "ms  " << times_130000[0] << "ms" << endl;
     cout << "Quick sorting: " << times_1300[1] << "ms  " << times_13000[1] << "ms  " << times_130000[1] << "ms" << endl;
     cout << "Merge sorting: " << times_1300[2] << "ms  " << times_13000[2] << "ms  " << times_130000[2] << "ms" << endl;
-    cout << "STL sorting:   " << times_1300[3] << "ms  " << times_13000[3] << "ms  " << times_130000[3] << "ms" << endl;
-    cout << "Radix sorting: " << times_1300[4] << "ms  " << times_13000[4] << "ms  " << times_130000[4] << "ms" << endl;
+//    cout << "STL sorting:   " << times_1300[3] << "ms  " << times_13000[3] << "ms  " << times_130000[3] << "ms" << endl;
+//    cout << "Radix sorting: " << times_1300[4] << "ms  " << times_13000[4] << "ms  " << times_130000[4] << "ms" << endl;
 
 
 

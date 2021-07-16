@@ -155,22 +155,22 @@ int main() {
     times_14300.push_back(test_sorting_speed(shakerSort, 14300, false));
 //
 //    // sorting time results for 130000
-//    times_130000.push_back(test_sorting_speed(insertion_sort, 130000, false));
-//    times_130000.push_back(test_sorting_speed(select_sort, 130000, false));
-//    times_130000.push_back(test_sorting_speed(bubble_sort, 130000, false));
-//    times_130000.push_back(test_sorting_speed(shakerSort, 130000, false));
-//
-//    cout << "Insertion sort " << times_1420[0] /CLOCKS_PER_SEC << "s     " << times_14300[0] / CLOCKS_PER_SEC << "s     " << times_130000[0] / CLOCKS_PER_SEC<< "s" << endl;
-//    cout << "Select sort    " << times_1420[1] /CLOCKS_PER_SEC<< "s     " << times_14300[1] / CLOCKS_PER_SEC << "s     " << times_130000[1] / CLOCKS_PER_SEC<< "s" << endl;
-//    cout << "Bubble sort    " << times_1420[2] /CLOCKS_PER_SEC<< "s     " << times_14300[2] / CLOCKS_PER_SEC << "s     " << times_130000[2] / CLOCKS_PER_SEC<< "s" << endl;
-//    cout << "Shaker sort    " << times_1420[3] /CLOCKS_PER_SEC<< "s     " << times_14300[3] / CLOCKS_PER_SEC << "s     " << times_130000[3] / CLOCKS_PER_SEC<< "s" << endl;
+    times_130000.push_back(test_sorting_speed(insertion_sort, 130000, false));
+    times_130000.push_back(test_sorting_speed(select_sort, 130000, false));
+    times_130000.push_back(test_sorting_speed(bubble_sort, 130000, false));
+    times_130000.push_back(test_sorting_speed(shakerSort, 130000, false));
+
+    cout << "Insertion sort " << times_1420[0] /CLOCKS_PER_SEC << "s     " << times_14300[0] / CLOCKS_PER_SEC << "s     " << times_130000[0] / CLOCKS_PER_SEC<< "s" << endl;
+    cout << "Select sort    " << times_1420[1] /CLOCKS_PER_SEC<< "s     " << times_14300[1] / CLOCKS_PER_SEC << "s     " << times_130000[1] / CLOCKS_PER_SEC<< "s" << endl;
+    cout << "Bubble sort    " << times_1420[2] /CLOCKS_PER_SEC<< "s     " << times_14300[2] / CLOCKS_PER_SEC << "s     " << times_130000[2] / CLOCKS_PER_SEC<< "s" << endl;
+    cout << "Shaker sort    " << times_1420[3] /CLOCKS_PER_SEC<< "s     " << times_14300[3] / CLOCKS_PER_SEC << "s     " << times_130000[3] / CLOCKS_PER_SEC<< "s" << endl;
 
 
 
-    cout << "Insertion sort " << times_1420[0] / CLOCKS_PER_SEC * 1000<< "ms     " << times_14300[0] / CLOCKS_PER_SEC * 1000<< "ms     " << endl;
-    cout << "Select sort    " << times_1420[1] / CLOCKS_PER_SEC * 1000<< "ms     " << times_14300[1] / CLOCKS_PER_SEC * 1000<< "ms     " << endl;
-    cout << "Bubble sort    " << times_1420[2] / CLOCKS_PER_SEC * 1000<< "ms     " << times_14300[2] / CLOCKS_PER_SEC * 1000<< "ms     " << endl;
-    cout << "Shaker sort    " << times_1420[3] / CLOCKS_PER_SEC * 1000<< "ms     " << times_14300[3] / CLOCKS_PER_SEC * 1000 << "ms     " << endl;
+//    cout << "Insertion sort " << times_1420[0] / CLOCKS_PER_SEC * 1000<< "ms     " << times_14300[0] / CLOCKS_PER_SEC * 1000<< "ms     " << endl;
+//    cout << "Select sort    " << times_1420[1] / CLOCKS_PER_SEC * 1000<< "ms     " << times_14300[1] / CLOCKS_PER_SEC * 1000<< "ms     " << endl;
+//    cout << "Bubble sort    " << times_1420[2] / CLOCKS_PER_SEC * 1000<< "ms     " << times_14300[2] / CLOCKS_PER_SEC * 1000<< "ms     " << endl;
+//    cout << "Shaker sort    " << times_1420[3] / CLOCKS_PER_SEC * 1000<< "ms     " << times_14300[3] / CLOCKS_PER_SEC * 1000 << "ms     " << endl;
 
     return 0;
 }

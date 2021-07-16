@@ -28,7 +28,9 @@ public:
         this->ndim = matrix.size();
         this->matrix = matrix;
     }
-
+    ~SquareMatrix(){
+        this->matrix.clear();
+    }
 
     void print_matrix(){
         for(auto& row : this->matrix){
@@ -38,6 +40,7 @@ public:
             cout << endl;
         }
     }
+
     SquareMatrix get_inverse_matrix(){
         auto inverse_matrix = SquareMatrix(this->ndim);
         for (int i = 0; i < inverse_matrix.ndim; ++i) {
@@ -58,6 +61,7 @@ public:
 
         return res;
     }
+
     vector<double>& operator [] (int index){
         return this->matrix[index];
     }
@@ -98,6 +102,27 @@ public:
 
         return new_matrix;
     }
+    SquareMatrix operator * (double number){
+        auto new_matrix = SquareMatrix(this->ndim);
+        for (int i = 0; i < new_matrix.ndim; ++i) {
+            for (int j = 0; j < new_matrix.ndim; ++j) {
+                new_matrix[i][j] = this->matrix[i][j] * number;
+            }
+        }
+
+        return new_matrix;
+    }
+    SquareMatrix operator / (double number){
+        auto new_matrix = SquareMatrix(this->ndim);
+        for (int i = 0; i < new_matrix.ndim; ++i) {
+            for (int j = 0; j < new_matrix.ndim; ++j) {
+                new_matrix[i][j] = this->matrix[i][j] / number;
+            }
+        }
+
+        return new_matrix;
+    }
+
     bool operator == (SquareMatrix& another){
         if(this->ndim != another.ndim)
             return false;
@@ -111,22 +136,12 @@ public:
 
         return true;
     }
-    void operator *= (double value){
-        for (int i = 0; i < this->ndim; ++i) {
-            this->matrix[i][i] *= value;
-        }
-    }
-    void operator /= (double value){
-        for (int i = 0; i < this->ndim; ++i) {
-            this->matrix[i][i] /= value;
-        }
-    }
-    void operator * (double number){
+    void operator *= (double number){
         for(auto& row : this->matrix)
             for(auto& value : row)
                 value *= number;
     }
-    void operator / (double number){
+    void operator /= (double number){
         for(auto& row : this->matrix)
             for(auto& value : row)
                 value /= number;
@@ -156,6 +171,7 @@ private:
             if(not count(deleted_cols.begin(), deleted_cols.end(), i)){
                 auto new_deleted_columns = deleted_cols;
                 new_deleted_columns.push_back(i);
+
                 res += pow(-1, 0 + count_column_index) * this->matrix[cur_row][i] * this->_get_det_for_minor(deleted_rows, new_deleted_columns);
                 count_column_index++;
             }

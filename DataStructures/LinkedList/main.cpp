@@ -1,14 +1,14 @@
 #include <iostream>
 
-#include "sorting_tests.h"
-#include "filter_test.h"
-#include "pushing_seting_geting_tests.h"
-#include "extending_tests.h"
-#include "count_tests.h"
-#include "indexing_test.h"
-#include "remove_tests.h"
+#include "tests/sorting_tests.h"
+#include "tests/filter_test.h"
+#include "tests/pushing_seting_geting_tests.h"
+#include "tests/extending_tests.h"
+#include "tests/count_tests.h"
+#include "tests/indexing_test.h"
+#include "tests/remove_tests.h"
 
-#include "MyList.h"
+#include "./MyList.h"
 
 using namespace std;
 

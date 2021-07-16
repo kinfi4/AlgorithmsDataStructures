@@ -55,8 +55,10 @@ void directed_task(){
 
 
 int main() {
+    cout << "UNDIRECTED TASK" << endl;
     undirected_task();
-//    directed_task();
+    cout << "DIRECTED TASK" << endl;
+    directed_task();
 
     return 0;
 }

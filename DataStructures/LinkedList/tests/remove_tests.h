@@ -2,7 +2,7 @@
 // Created by kini4 on 2/28/21.
 //
 
-#include "MyList.h"
+#include "../MyList.h"
 #include <assert.h>
 
 #ifndef LINKEDLIST_REMOVE_TESTS_H
