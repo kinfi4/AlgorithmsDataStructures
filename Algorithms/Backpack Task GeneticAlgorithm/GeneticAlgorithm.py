@@ -1,11 +1,12 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class GeneticBackpackFinder:
     BACKPACK_SIZE = 100
     INTERBREED_PROPORTION = 0.3
     MUTATION_RATE = 0.7
-    EPOCHS = 1000
+    EPOCHS = 2000
 
     def __init__(self, capacity):
         self.capacity = capacity
@@ -21,11 +22,16 @@ class GeneticBackpackFinder:
         self.record = np.max(np.apply_along_axis(self._fitness, 1, self.population))
         self.best_set = self.population[np.argmax(np.apply_along_axis(self._fitness, 1, self.population))]
 
+        records = []
+
         for i in range(self.EPOCHS):
+            records.append(self.record)
+
             if i % 20 == 0:
+                self._plot_results(i, records)
                 print(f'Price for best set: {self.record}')
 
-            random_index_1, random_index_2 = np.random.choice(self.population.shape[0], size=2)
+            random_index_1, random_index_2 = np.random.choice(self.population.shape[0], size=2)  # getting two random sets from population
             random_set_1, random_set_2 = self.population[random_index_1, :], self.population[random_index_2, :]
 
             first_descendant, second_descendant = self._interbreed(random_set_1, random_set_2)
@@ -35,13 +41,13 @@ class GeneticBackpackFinder:
             if np.random.random() < self.MUTATION_RATE:
                 self._mutate(second_descendant)
 
-            if self.fit_backpack(first_descendant):
+            if self.fit_backpack(first_descendant):  # if descendant fits the backpack, we replace the worst set with it
                 sum_prices_for_each_set = np.apply_along_axis(self._fitness, 1, self.population)
                 self.population[np.argmin(sum_prices_for_each_set)] = first_descendant
 
                 self.record = max(self.record, self._fitness(first_descendant))
 
-            if self.fit_backpack(second_descendant):
+            if self.fit_backpack(second_descendant):  # here the same, as 5 rows above
                 sum_prices_for_each_set = np.apply_along_axis(self._fitness, 1, self.population)
                 self.population[np.argmin(sum_prices_for_each_set)] = second_descendant
 
@@ -76,7 +82,22 @@ class GeneticBackpackFinder:
             rand_idx_1, rand_idx_0 = np.random.choice(indexes_with_1), np.random.choice(indexes_with_0)
             items_set[rand_idx_1], items_set[rand_idx_0] = items_set[rand_idx_0], items_set[rand_idx_1]
 
+    @staticmethod
+    def _plot_results(iteration, fitness):
+        plt.clf()
+        plt.title('Training...')
+        plt.xlabel('Number of iterations')
+        plt.ylabel('Maximum price')
+        plt.plot(list(range(iteration + 1)), fitness, label='Record price')
+        plt.ylim(ymin=0)
 
-backpack_finder = GeneticBackpackFinder(capacity=250)
-best_set = backpack_finder.start_evolution()
-print(best_set)
+        plt.legend()
+        plt.show(block=False)
+        plt.pause(0.0001)
+
+
+if __name__ == '__main__':
+    backpack = GeneticBackpackFinder(capacity=250)
+    bast_set = backpack.start_evolution()
+    print(bast_set)
+    input()
