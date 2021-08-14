@@ -83,16 +83,16 @@ class Sorter:
 
     @staticmethod
     def _write_char_from_file_to_file(number, from_file, to_file):
+        """
+         Writes incoming number to file, then takes the next(from_file) and returns it.
+         If next(from_file) raises StopIteration (its empty) this method returns None
+        """
         to_file.write(f'{number}\n')
 
         try:
             return int(next(from_file).strip())
         except StopIteration:
             return None
-
-
-sorter = Sorter()
-sorter.sort_file('f.txt')
 
 
 # 3

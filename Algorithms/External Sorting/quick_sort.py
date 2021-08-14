@@ -27,4 +27,3 @@ def quick_sort(lst, start=None, end=None):
 
         quick_sort(lst, start, p_i - 1)
         quick_sort(lst, p_i + 1, end)
-
