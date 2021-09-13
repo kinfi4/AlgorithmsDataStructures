@@ -27,10 +27,10 @@ class GeneticBackpackFinder:
         for i in range(self.EPOCHS):
             records.append(self.record)
 
-            if i % 20 == 0:
-                self._plot_record_results(i, records)
-                self._plot_population()
-                plt.show(block=False)
+            # if i % 20 == 0:
+                # self._plot_record_results(i, records)
+                # self._plot_population()
+                # plt.show(block=False)
 
             random_index_1 = np.random.choice(self.population.shape[0], size=1)[0]  # getting two random sets from population
             random_set_1 = self.population[random_index_1, :]
@@ -122,10 +122,17 @@ class GeneticBackpackFinder:
 
 
 if __name__ == '__main__':
-    backpack = GeneticBackpackFinder(capacity=250)
-    bast_set = backpack.start_evolution()
-    print(f'Best set price: {backpack.fitness(bast_set)} Best set weight: {backpack.items_set_weight(bast_set)}')
+    results = []
 
+    for _ in range(10):
+        backpack = GeneticBackpackFinder(capacity=250)
+        bast_set = backpack.start_evolution()
+
+        print(f'Best set price: {backpack.fitness(bast_set)} Best set weight: {backpack.items_set_weight(bast_set)}')
+        results.append(backpack.fitness(bast_set))
+
+    print(sum(results) / len(results))
+    print(results)
     # avg for cross: random - random = 430
-    # avg for cross: best - random = 653
+    # avg for cross: best - random = 653 626
     input()
