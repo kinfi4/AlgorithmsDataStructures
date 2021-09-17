@@ -2,7 +2,7 @@ import math
 from time import perf_counter
 
 from abstract_board import Board
-from const import INFINITY, FAIL
+from const import INFINITY, FAIL, EMPTY_BOARD
 
 
 class RBFSBoardStrategy(Board):
@@ -49,7 +49,8 @@ class RBFSBoardStrategy(Board):
             if math.fabs(self.start_time - perf_counter()) // 60 > 30:
                 break
 
-        print('This configuration cant be solved')
+        print('Time limit exceeded')
+        return EMPTY_BOARD
 
     def _get_two_first_best_solutions_indexes(self, boards):
         sorted_boards = sorted(boards, key=self.evaluate_state)

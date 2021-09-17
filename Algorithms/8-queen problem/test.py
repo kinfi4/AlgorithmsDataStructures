@@ -4,10 +4,10 @@ from ids_for_solving_queen_problem import IDSBoardStrategy
 from rbfs_fro_solving_queen_problem import RBFSBoardStrategy
 
 
-def measure_algorithm(strategy_class):
+def measure_algorithm(strategy_class, iterations_number=20, difficulty=2):
     times, states, iterations = [], [], []
-    for _ in range(1):
-        b = strategy_class()
+    for _ in range(iterations_number):
+        b = strategy_class(difficulty=difficulty)
 
         start_time = perf_counter()
         b.solve()
@@ -26,5 +26,5 @@ def measure_algorithm(strategy_class):
 
 
 if __name__ == '__main__':
-    measure_algorithm(RBFSBoardStrategy)
-    measure_algorithm(IDSBoardStrategy)
+    measure_algorithm(RBFSBoardStrategy, 20, difficulty=1)
+    measure_algorithm(IDSBoardStrategy, 20, difficulty=1)

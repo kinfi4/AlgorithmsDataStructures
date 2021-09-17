@@ -7,7 +7,7 @@ from const import Figures, Point, BOARD_SIZE, SOLVED_BOARDS
 
 class Board(ABC):
     def __init__(self, difficulty=2):
-        if difficulty < 1 or difficulty > 5:
+        if difficulty < 1 or difficulty > 8:
             raise ValueError(f'Value for difficulty = {difficulty} is invalid, difficulty must be an integer in [1, 5]')
 
         self.difficulty = difficulty
@@ -15,6 +15,7 @@ class Board(ABC):
         self.start_time = None
         self.number_of_states = 0
         self.number_of_iterations = 0
+        self.number_of_dead_ends = 0
 
     def evaluate_state(self, board):
         queen_positions = list(self.get_all_queens(board))
