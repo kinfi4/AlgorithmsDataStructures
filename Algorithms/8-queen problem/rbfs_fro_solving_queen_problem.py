@@ -51,13 +51,3 @@ class RBFSBoardStrategy(Board):
 
         print('Time limit exceeded')
         return EMPTY_BOARD
-
-    def _get_two_first_best_solutions_indexes(self, boards):
-        sorted_boards = sorted(boards, key=self.evaluate_state)
-
-        if len(sorted_boards) > 2:
-            return sorted_boards[0], sorted_boards[1]
-        elif len(sorted_boards) == 1:
-            return sorted_boards[0], None
-        else:
-            raise ValueError('Cant get two best boards from empty list')

@@ -1,4 +1,4 @@
-from random import choice
+from random import choice, sample
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -31,15 +31,13 @@ class Salesman:
         np.fill_diagonal(self.cities_distances, np.inf)
 
         self.best_path, self.record = self._find_greedy_path_length()
+        # self.best_path, self.record = self._find_random_path()
 
     def fit(self):
         record_list = [self.record]
 
         for iteration_idx in range(self.epochs):
             routes = [self.best_path]
-
-            if iteration_idx % 20 == 0 or iteration_idx < 3:
-                self._plotting(iteration_idx, record_list)
 
             for _ in range(self.number_of_ants):
                 route = []
@@ -58,14 +56,20 @@ class Salesman:
                 routes.append(route)
                 self.not_visited_nodes = list(range(self.number_of_cities))
 
-            self.best_path = routes[np.argmin(np.apply_along_axis(self.fitness, 1, routes))]
+            paths_lengths = np.apply_along_axis(self.fitness, 1, routes)
+            self.best_path = routes[np.argmin(paths_lengths)]
             self.record = self.fitness(self.best_path)
             record_list.append(self.record)
+
+            if iteration_idx % 5 == 0 or iteration_idx < 3:  # plotting
+                self._plotting_record(iteration_idx, record_list)
+                self._plotting_population(paths_lengths)
+                plt.show(block=False)
 
             self._update_pheromone(routes)
             self.probability_matrix = self._calculate_probability_matrix()
 
-        return self.best_path, self.record
+        return self.best_path, self.record, record_list
 
     def fitness(self, route):
         """
@@ -76,16 +80,23 @@ class Salesman:
         return np.sum([self.cities_distances[route[i], route[i + 1]] for i in range(-1, self.number_of_cities - 1)])
 
     def _choose_next_node(self, current_node):
-        numerator = self.probability_matrix[current_node, self.not_visited_nodes]
-        return int(np.argmax(numerator))
+        weights = self.probability_matrix[current_node, self.not_visited_nodes]
+        probabilities = weights / np.sum(weights)
+
+        if np.isnan(np.sum(probabilities)):
+            return int(np.argmax(weights))
+
+        return int(np.random.choice(range(len(weights)), p=probabilities))
 
     def _update_pheromone(self, routes: list):
         self.pheromone *= (1 - self.evaporation)
 
         for route in routes:
+            pheromone_change = self.record / self.fitness(route)
+
             for i in range(len(route) - 1):
                 from_town, to_town = route[i], route[i + 1]
-                self.pheromone[from_town, to_town] += self.record / self.fitness(route)
+                self.pheromone[from_town, to_town] += pheromone_change
                 self.pheromone[to_town, from_town] = self.pheromone[from_town, to_town]
 
     def _calculate_probability_matrix(self):
@@ -93,7 +104,7 @@ class Salesman:
 
     def _find_greedy_path_length(self):
         current_node, path = 0, []
-        visited = []
+        visited = set()
 
         for _ in range(self.number_of_cities):
             path.append(current_node)
@@ -106,18 +117,47 @@ class Salesman:
                         min_dis_idx = index
                         min_dis = dist
 
-            visited.append(current_node)
+            visited.add(current_node)
             current_node = min_dis_idx
 
         return path, self.fitness(path)
 
-    def _plotting(self, iteration, records):
+    def _find_random_path(self):
+        random_path = sample(range(self.number_of_cities), self.number_of_cities)
+        return random_path, self.fitness(random_path)
+
+    def _plotting_record(self, iteration, records):
         _ = plt.figure(1)
         plt.clf()
-        plt.title('Training...')
         plt.xlabel('Iterations')
         plt.ylabel('Route length')
-        plt.plot(list(range(iteration + 1)), records, label='Record')
-        plt.legend()
+        plt.plot(list(range(iteration + 2)), records, label='Record')
+
+        manager = plt.get_current_fig_manager()
+        manager.window.setGeometry(50, 100, 640, 520)
+
+        plt.title('Training...')
         plt.pause(0.000001)
-        plt.show(block=False)
+
+    def _plotting_population(self, paths_lengths):
+        _ = plt.figure(2)
+        plt.clf()
+        plt.xlabel('Ants')
+        plt.ylabel('Paths chosen')
+
+        plt.ylim(self.number_of_cities, self.number_of_cities * 20)
+
+        plt.plot(list(range(1, self.number_of_ants + 1)),
+                 paths_lengths[1:],
+                 linestyle="",
+                 marker="o",
+                 markersize=2)
+
+        plt.plot(['Best path'], paths_lengths[0], linestyle="", color='red', marker="o", markersize=4)
+
+        manager = plt.get_current_fig_manager()
+        manager.window.setGeometry(700, 100, 640, 520)
+
+        plt.title('Training...')
+        plt.pause(0.000001)
+
