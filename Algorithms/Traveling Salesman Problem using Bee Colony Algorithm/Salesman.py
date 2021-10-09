@@ -7,18 +7,18 @@ plt.ion()
 
 
 class Salesman:
-    CITIES_AMOUNT = 300
-    WORK_BEES_AMOUNT = 60
-    SCOUTERS_AMOUNT = 15
-    NOT_CHANGING_LIMIT = 50
-    EPOCHS = 100
-
-    def __init__(self):
-        self.cities = np.random.randint(5, 151, size=(self.CITIES_AMOUNT, self.CITIES_AMOUNT))
+    def __init__(self, cities_amount=300, work_bees_amount=60, scouters_amount=15, not_changing_limit=50, epochs=100):
+        self.cities_amount = cities_amount
+        self.work_bees_amount = work_bees_amount
+        self.scouters_amount = scouters_amount
+        self.not_changing_limit = not_changing_limit
+        self.epochs = epochs        
+        
+        self.cities = np.random.randint(5, 151, size=(self.cities_amount, self.cities_amount))
         np.fill_diagonal(self.cities, 0)
 
-        self.population = np.array([self._generate_random_route() for _ in range(self.SCOUTERS_AMOUNT)])  # generating 100 initial random routes
-        self.route_not_changing = np.array([0] * self.SCOUTERS_AMOUNT)
+        self.population = np.array([self._generate_random_route() for _ in range(self.scouters_amount)])
+        self.route_not_changing = np.array([0] * self.scouters_amount)
 
         self.record = np.inf
         self.best_route = None
@@ -26,7 +26,7 @@ class Salesman:
     def find_optimal_path(self):
         records = []
 
-        for i in range(self.EPOCHS):
+        for i in range(self.epochs):
             self._improve_all_areas()
             self._onlooker_bees_stage()
             self._scouter_bees_step()
@@ -35,14 +35,14 @@ class Salesman:
 
             records.append(self.record)
 
-            # if i % 2 == 0:
-            #     self._plotting_records(i, records)
-            #     self._plotting_population()
+            if i % 5 == 0 or i < 3:
+                self._plotting_records(i, records)
+                self._plotting_population()
 
         return self.record, self.best_route
 
     def _improve_all_areas(self):
-        for i in range(self.SCOUTERS_AMOUNT):
+        for i in range(self.scouters_amount):
             chosen_route = self.population[i]
             random_neighbor = self._generate_neighbor(chosen_route)
 
@@ -50,9 +50,11 @@ class Salesman:
             self._set_best_route(i, best_route)
 
     def _onlooker_bees_stage(self):
-        for _ in range(self.WORK_BEES_AMOUNT):
-            probabilities = [self._route_probability(route) for route in self.population]
-            chosen_index = choices(range(len(self.population)), probabilities)[0]
+        probabilities = np.apply_along_axis(self._route_probability, axis=1, arr=self.population)
+        cities_indexes = list(range(len(self.population)))
+
+        for _ in range(self.work_bees_amount):
+            chosen_index = np.random.choice(cities_indexes, p=probabilities)
             chosen_route = self.population[chosen_index]
             random_neighbor = self._generate_neighbor(chosen_route)
 
@@ -60,8 +62,8 @@ class Salesman:
             self._set_best_route(chosen_index, best_route)
 
     def _scouter_bees_step(self):
-        for i in range(self.SCOUTERS_AMOUNT):
-            if self.route_not_changing[i] > self.NOT_CHANGING_LIMIT and self.fitness(self.population[i]) != self.record:
+        for i in range(self.scouters_amount):
+            if self.route_not_changing[i] > self.not_changing_limit and self.fitness(self.population[i]) != self.record:
                 self.population[i] = self._generate_random_route()
                 self.route_not_changing[i] = 0
 
@@ -76,7 +78,7 @@ class Salesman:
 
     def _generate_neighbor(self, route, distance=6):
         route_copy = route.copy()
-        random_indexes = sample(range(self.CITIES_AMOUNT), distance)
+        random_indexes = sample(range(self.cities_amount), distance)
 
         for index_of_index in range(len(random_indexes) - 1):
             first_index = random_indexes[index_of_index]
@@ -86,7 +88,7 @@ class Salesman:
         return route_copy
 
     def _generate_random_route(self):
-        return np.array(sample(range(self.CITIES_AMOUNT), self.CITIES_AMOUNT))
+        return np.array(sample(range(self.cities_amount), self.cities_amount))
 
     def _plotting_records(self, iteration, records):
         _ = plt.figure(1)
@@ -96,6 +98,10 @@ class Salesman:
         plt.ylabel('Route length')
         plt.plot(list(range(iteration + 1)), records, label='Record')
         plt.legend()
+
+        manager = plt.get_current_fig_manager()
+        manager.window.setGeometry(50, 100, 640, 520)
+
         plt.pause(0.000001)
 
     def _plotting_population(self):
@@ -104,9 +110,9 @@ class Salesman:
         plt.title('Training...')
         plt.xlabel('Individuals')
         plt.ylabel('Routes length')
-        plt.ylim(5 * self.CITIES_AMOUNT, 150 * self.CITIES_AMOUNT)
+        plt.ylim(5 * self.cities_amount, 150 * self.cities_amount)
 
-        plt.plot(list(range(self.SCOUTERS_AMOUNT)),
+        plt.plot(list(range(self.scouters_amount)),
                  np.apply_along_axis(self.fitness, 1, self.population),
                  linestyle="",
                  marker="o",
@@ -118,21 +124,13 @@ class Salesman:
         plt.pause(0.000001)
 
     def _route_probability(self, route):
-        return self.fitness(route) / np.sum([self.fitness(route) for route in self.population])
+        return self.fitness(route) / np.sum(np.apply_along_axis(self.fitness, axis=1, arr=self.population))
 
     def fitness(self, route):
         """
         Calculates the total price for passed route
 
-        :param route: iterable obj with size of CITIES_AMOUNT, represents the route of salesman
+        :param route: iterable obj with size of cities_amount, represents the route of salesman
         :return: int - total price for this route
         """
-        return np.sum([self.cities[route[i], route[i + 1]] for i in range(-1, self.CITIES_AMOUNT - 1)])
-
-
-if __name__ == '__main__':
-    salesman = Salesman()
-    results = salesman.find_optimal_path()
-    print(results)
-
-    input('Press any key, to quit the script...')
+        return np.sum([self.cities[route[i], route[i + 1]] for i in range(-1, self.cities_amount - 1)])
