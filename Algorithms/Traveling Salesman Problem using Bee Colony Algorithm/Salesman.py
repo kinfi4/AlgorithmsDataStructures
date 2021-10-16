@@ -7,11 +7,12 @@ plt.ion()
 
 
 class Salesman:
-    def __init__(self, cities_amount=300, work_bees_amount=60, scouters_amount=15, not_changing_limit=50, epochs=100):
+    def __init__(self, cities_amount=300, work_bees_amount=60, scouters_amount=15, not_changing_limit=50, epochs=100, show_plots=True):
         self.cities_amount = cities_amount
         self.work_bees_amount = work_bees_amount
         self.scouters_amount = scouters_amount
         self.not_changing_limit = not_changing_limit
+        self.show_plots = show_plots
         self.epochs = epochs        
         
         self.cities = np.random.randint(5, 151, size=(self.cities_amount, self.cities_amount))
@@ -29,13 +30,13 @@ class Salesman:
         for i in range(self.epochs):
             self._improve_all_areas()
             self._onlooker_bees_stage()
-            self._scouter_bees_step()
-            self.best_route = self.population[np.argmin(np.apply_along_axis(self.fitness, 1, self.population))]
-            self.record = self.fitness(self.best_route)
+            self._random_search()
+            self.best_route = self.population[np.argmax(np.apply_along_axis(self.fitness, 1, self.population))]
+            self.record = self.route_length(self.best_route)
 
             records.append(self.record)
 
-            if i % 5 == 0 or i < 3:
+            if self.show_plots and (i % 5 == 0 or i < 3):
                 self._plotting_records(i, records)
                 self._plotting_population()
 
@@ -46,7 +47,7 @@ class Salesman:
             chosen_route = self.population[i]
             random_neighbor = self._generate_neighbor(chosen_route)
 
-            best_route = min(chosen_route, random_neighbor, key=self.fitness)
+            best_route = max(chosen_route, random_neighbor, key=self.fitness)
             self._set_best_route(i, best_route)
 
     def _onlooker_bees_stage(self):
@@ -58,12 +59,12 @@ class Salesman:
             chosen_route = self.population[chosen_index]
             random_neighbor = self._generate_neighbor(chosen_route)
 
-            best_route = min(chosen_route, random_neighbor, key=self.fitness)
+            best_route = max(chosen_route, random_neighbor, key=self.fitness)
             self._set_best_route(chosen_index, best_route)
 
-    def _scouter_bees_step(self):
+    def _random_search(self):
         for i in range(self.scouters_amount):
-            if self.route_not_changing[i] > self.not_changing_limit and self.fitness(self.population[i]) != self.record:
+            if self.route_not_changing[i] > self.not_changing_limit and self.route_length(self.population[i]) != self.record:
                 self.population[i] = self._generate_random_route()
                 self.route_not_changing[i] = 0
 
@@ -113,7 +114,7 @@ class Salesman:
         plt.ylim(5 * self.cities_amount, 150 * self.cities_amount)
 
         plt.plot(list(range(self.scouters_amount)),
-                 np.apply_along_axis(self.fitness, 1, self.population),
+                 np.apply_along_axis(self.route_length, 1, self.population),
                  linestyle="",
                  marker="o",
                  markersize=4)
@@ -127,6 +128,9 @@ class Salesman:
         return self.fitness(route) / np.sum(np.apply_along_axis(self.fitness, axis=1, arr=self.population))
 
     def fitness(self, route):
+        return 1 / self.route_length(route)
+
+    def route_length(self, route):
         """
         Calculates the total price for passed route
 
