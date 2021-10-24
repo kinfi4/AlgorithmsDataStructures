@@ -1,4 +1,4 @@
-from random import sample, choices
+from random import sample
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,9 +7,17 @@ plt.ion()
 
 
 class Salesman:
-    def __init__(self, cities_amount=300, work_bees_amount=60, scouters_amount=15, not_changing_limit=50, epochs=100, show_plots=True):
+    def __init__(self, cities_amount=300,
+                 work_bees_amount=60,
+                 number_of_sectors=50,
+                 scouters_amount=15,
+                 not_changing_limit=100,
+                 epochs=1000,
+                 show_plots=True):
+
         self.cities_amount = cities_amount
         self.work_bees_amount = work_bees_amount
+        self.number_of_sectors = number_of_sectors
         self.scouters_amount = scouters_amount
         self.not_changing_limit = not_changing_limit
         self.show_plots = show_plots
@@ -18,22 +26,24 @@ class Salesman:
         self.cities = np.random.randint(5, 151, size=(self.cities_amount, self.cities_amount))
         np.fill_diagonal(self.cities, 0)
 
-        self.population = np.array([self._generate_random_route() for _ in range(self.scouters_amount)])
-        self.route_not_changing = np.array([0] * self.scouters_amount)
+        self.population = np.array([self._generate_random_route() for _ in range(self.number_of_sectors)])
+        self.route_not_changing = np.array([0] * self.number_of_sectors)
 
         self.record = np.inf
         self.best_route = None
 
-    def find_optimal_path(self):
+    def fit(self):
         records = []
 
         for i in range(self.epochs):
+            chosen_areas_indexes = self.scouters_stage()
+            self._onlooker_bees_stage(chosen_areas_indexes)
+
             self._improve_all_areas()
-            self._onlooker_bees_stage()
             self._random_search()
+
             self.best_route = self.population[np.argmax(np.apply_along_axis(self.fitness, 1, self.population))]
             self.record = self.route_length(self.best_route)
-
             records.append(self.record)
 
             if self.show_plots and (i % 5 == 0 or i < 3):
@@ -43,27 +53,27 @@ class Salesman:
         return self.record, self.best_route
 
     def _improve_all_areas(self):
-        for i in range(self.scouters_amount):
+        for i in range(self.number_of_sectors):
             chosen_route = self.population[i]
             random_neighbor = self._generate_neighbor(chosen_route)
 
             best_route = max(chosen_route, random_neighbor, key=self.fitness)
             self._set_best_route(i, best_route)
 
-    def _onlooker_bees_stage(self):
-        probabilities = np.apply_along_axis(self._route_probability, axis=1, arr=self.population)
-        cities_indexes = list(range(len(self.population)))
+    def _onlooker_bees_stage(self, areas_indexes):
+        areas = self.population[areas_indexes]
+        probabilities = np.apply_along_axis(self._route_probability, 1, areas, areas)
 
         for _ in range(self.work_bees_amount):
-            chosen_index = np.random.choice(cities_indexes, p=probabilities)
+            chosen_index = np.random.choice(areas_indexes, p=probabilities)
             chosen_route = self.population[chosen_index]
-            random_neighbor = self._generate_neighbor(chosen_route)
+            random_neighbor = self._generate_neighbor(chosen_route, distance=6)
 
             best_route = max(chosen_route, random_neighbor, key=self.fitness)
             self._set_best_route(chosen_index, best_route)
 
     def _random_search(self):
-        for i in range(self.scouters_amount):
+        for i in range(self.number_of_sectors):
             if self.route_not_changing[i] > self.not_changing_limit and self.route_length(self.population[i]) != self.record:
                 self.population[i] = self._generate_random_route()
                 self.route_not_changing[i] = 0
@@ -111,9 +121,9 @@ class Salesman:
         plt.title('Training...')
         plt.xlabel('Individuals')
         plt.ylabel('Routes length')
-        plt.ylim(5 * self.cities_amount, 150 * self.cities_amount)
+        plt.ylim(10 * self.cities_amount, 100 * self.cities_amount)
 
-        plt.plot(list(range(self.scouters_amount)),
+        plt.plot(list(range(self.number_of_sectors)),
                  np.apply_along_axis(self.route_length, 1, self.population),
                  linestyle="",
                  marker="o",
@@ -124,8 +134,8 @@ class Salesman:
 
         plt.pause(0.000001)
 
-    def _route_probability(self, route):
-        return self.fitness(route) / np.sum(np.apply_along_axis(self.fitness, axis=1, arr=self.population))
+    def _route_probability(self, route, areas):
+        return self.fitness(route) / np.sum(np.apply_along_axis(self.fitness, axis=1, arr=areas))
 
     def fitness(self, route):
         return 1 / self.route_length(route)
@@ -138,3 +148,19 @@ class Salesman:
         :return: int - total price for this route
         """
         return np.sum([self.cities[route[i], route[i + 1]] for i in range(-1, self.cities_amount - 1)])
+
+    def scouters_stage(self):
+        best_areas_number = (self.scouters_amount * 2) // 3  # we will return first best_areas_number areas and
+        random_areas_number = self.scouters_amount - best_areas_number  # random_areas_number random areas
+
+        population_fitness = np.apply_along_axis(self.fitness, axis=1, arr=self.population)
+        best_routes_indexes = np.argpartition(population_fitness, -best_areas_number)[-best_areas_number:]
+
+        probabilities = np.array([1] * len(self.population), dtype=np.float)
+        probabilities[best_routes_indexes] = 0
+        probabilities[probabilities == 1] = 1 / (len(self.population) - best_areas_number)
+
+        population_indexes = list(range(len(self.population)))
+        random_routes_indexes = np.random.choice(population_indexes, p=probabilities, size=random_areas_number, replace=False)
+
+        return np.concatenate((best_routes_indexes, random_routes_indexes), axis=None)

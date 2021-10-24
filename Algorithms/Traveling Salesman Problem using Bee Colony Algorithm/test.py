@@ -5,7 +5,7 @@ from Salesman import Salesman
 
 def test_set_of_arguments(workers, scouters):
     salesman = Salesman(work_bees_amount=workers, scouters_amount=scouters, epochs=300, not_changing_limit=100, show_plots=False)
-    return salesman.find_optimal_path()
+    return salesman.fit()
 
 
 def find_best_salesman_arguments(min_workers=50, max_workers=200, min_scouters=5, max_scouters=40):
@@ -36,6 +36,9 @@ def find_best_salesman_arguments(min_workers=50, max_workers=200, min_scouters=5
 
 
 if __name__ == '__main__':
-    find_best_salesman_arguments()
+    s = Salesman(epochs=1000, show_plots=True)
+    record, best_route = s.fit()
 
+    print(f'{record=}')
+    print(f'{best_route=}')
     input('Press any key, to quit the script...')
