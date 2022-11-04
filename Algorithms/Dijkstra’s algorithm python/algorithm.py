@@ -1,5 +1,10 @@
 import math
 
+import networkx as nx
+import numpy as np
+
+from utils.graph_visualization import visualize_graph
+
 
 def get_linked_nodes(start_node_index, graph_matrix):
     """ Finds all the nodes that are linked to the start_node_index """
@@ -41,11 +46,23 @@ def dijkstra(graph_matrix, start_node):
     return weights
 
 
-D = ((0, 3, 1, 3, 0, 0),
-     (3, 0, 4, 0, 0, 0),
-     (1, 4, 0, 0, 7, 5),
-     (3, 0, 0, 0, 0, 2),
-     (0, 0, 7, 0, 0, 4),
-     (0, 0, 5, 2, 4, 0))
+#        1  2  3  4  5  6  7  8
+D = (
+        (0, 0, 3, 0, 0, 3, 0, 0),  # 1
+        (0, 0, 0, 3, 0, 1, 0, 2),  # 2
+        (0, 0, 0, 0, 0, 0, 0, 0),  # 3
+        (0, 1, 0, 0, 0, 0, 0, 2),  # 4
+        (0, 0, 2, 0, 0, 2, 0, 0),  # 5
+        (0, 0, 2, 0, 5, 0, 1, 0),  # 6
+        (0, 3, 0, 3, 2, 1, 0, 4),  # 7
+        (0, 0, 0, 0, 5, 3, 2, 0),  # 8
+)
 
-print(dijkstra(D, 0))  # [0, 3, 1, 3, 8, 5]
+
+distances = dijkstra(D, 1)
+
+for idx, distance in enumerate(distances, start=1):
+    print(f'Index: {idx} - distance: {distance}')
+
+
+visualize_graph(np.array(D), nx.OrderedDiGraph())
