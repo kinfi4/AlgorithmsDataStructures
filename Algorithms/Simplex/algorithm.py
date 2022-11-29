@@ -2,7 +2,7 @@ import math
 import numpy as np
 
 
-def to_tableau(c, A, b):
+def make_table(c, A, b):
     xb = [eq + [x] for eq, x in zip(A, b)]
     z = c + [0]
     return xb + [z]
@@ -13,16 +13,16 @@ def can_be_improved(tableau):
     return any(x > 0 for x in z[:-1])
 
 
-def is_basic(column):
+def is_basic_solution(column):
     return sum(column) == 1 and len([c for c in column if c == 0]) == len(column) - 1
 
 
-def get_solution(tableau):
+def propose_solution(tableau):
     columns = np.array(tableau).T
     solutions = []
     for column in columns[:-1]:
         solution = 0
-        if is_basic(column):
+        if is_basic_solution(column):
             one_index = column.tolist().index(1)
             solution = columns[-1][one_index]
         solutions.append(solution)
@@ -45,7 +45,7 @@ def pivot_step(tableau, pivot_position):
     return new_tableau
 
 
-def get_pivot_position(tableau):
+def get_pivot(tableau):
     z = tableau[-1]
     column = next(i for i, x in enumerate(z[:-1]) if x > 0)
 
@@ -58,26 +58,28 @@ def get_pivot_position(tableau):
     return row, column
 
 
-def simplex(c, A, b):
-    tableau = to_tableau(c, A, b)
+def simplex(z_coef, matrix, b):
+    table_form = make_table(z_coef, matrix, b)
 
-    print(tableau)
+    while can_be_improved(table_form):
+        pivot = get_pivot(table_form)
+        table_form = pivot_step(table_form, pivot)
 
-    while can_be_improved(tableau):
-        pivot_position = get_pivot_position(tableau)
-        tableau = pivot_step(tableau, pivot_position)
-
-    return get_solution(tableau)
+    return propose_solution(table_form)
 
 
-c1 = [1, 1, 0, 0, 0]
+c1 = [-6, 0, 1, -1, -2]
+
 A1 = [
-    [-1, 1, 1, 0, 0],
-    [1, 0, 0, 1, 0],
-    [0, 1, 0, 0, 1]
+    [4, 0, 5, 2, 1 ],
+    [2, -1, 0, 1, 0],
+    [1, 1, 0, 0, 1 ],
 ]
-b1 = [2, 4, 4]
+
+b1 = [8, 2, 2]
 
 
-solution = simplex(c1, A1, b1)
-print('solution: ', solution)
+result = simplex(c1, A1, b1)
+
+for idx, x_value in enumerate(result):
+    print(f'x_{idx} = {x_value}')
