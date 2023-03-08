@@ -1,0 +1,265 @@
+/home/kinfi4/.jdks/openjdk-19.0.2/bin/java -javaagent:/snap/intellij-idea-ultimate/405/lib/idea_rt.jar=38895:/snap/intellij-idea-ultimate/405/bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath /home/kinfi4/kpi/paralel/lab2/out/production/lab2 Main
+Sync multiplication: 315  Stripe multiplication: 315  FOX multiplication: 89
+==============================================
+Sync multiplication: 187  Stripe multiplication: 198  FOX multiplication: 54
+==============================================
+Sync multiplication: 165  Stripe multiplication: 162  FOX multiplication: 44
+==============================================
+Sync multiplication: 167  Stripe multiplication: 164  FOX multiplication: 48
+==============================================
+Sync multiplication: 160  Stripe multiplication: 177  FOX multiplication: 45
+==============================================
+Sync multiplication: 161  Stripe multiplication: 161  FOX multiplication: 51
+==============================================
+Sync multiplication: 166  Stripe multiplication: 165  FOX multiplication: 42
+==============================================
+Sync multiplication: 166  Stripe multiplication: 161  FOX multiplication: 43
+==============================================
+Sync multiplication: 161  Stripe multiplication: 150  FOX multiplication: 41
+==============================================
+Sync multiplication: 162  Stripe multiplication: 156  FOX multiplication: 47
+==============================================
+THREADS COUNT: 100 MATRIX SIZE: 500
+Sync: OptionalDouble[181.0]
+Stripe: OptionalDouble[180.9]
+Fox: OptionalDouble[50.4]
+-----------------------------------------
+
+
+Sync multiplication: 166  Stripe multiplication: 240  FOX multiplication: 59
+==============================================
+Sync multiplication: 169  Stripe multiplication: 185  FOX multiplication: 51
+==============================================
+Sync multiplication: 179  Stripe multiplication: 223  FOX multiplication: 54
+==============================================
+Sync multiplication: 169  Stripe multiplication: 210  FOX multiplication: 46
+==============================================
+Sync multiplication: 163  Stripe multiplication: 202  FOX multiplication: 52
+==============================================
+Sync multiplication: 169  Stripe multiplication: 209  FOX multiplication: 49
+==============================================
+Sync multiplication: 164  Stripe multiplication: 210  FOX multiplication: 50
+==============================================
+Sync multiplication: 171  Stripe multiplication: 209  FOX multiplication: 50
+==============================================
+Sync multiplication: 165  Stripe multiplication: 201  FOX multiplication: 51
+==============================================
+Sync multiplication: 171  Stripe multiplication: 219  FOX multiplication: 44
+==============================================
+THREADS COUNT: 250 MATRIX SIZE: 500
+Sync: OptionalDouble[168.6]
+Stripe: OptionalDouble[210.8]
+Fox: OptionalDouble[50.6]
+-----------------------------------------
+
+
+Sync multiplication: 166  Stripe multiplication: 304  FOX multiplication: 72
+==============================================
+Sync multiplication: 170  Stripe multiplication: 232  FOX multiplication: 69
+==============================================
+Sync multiplication: 168  Stripe multiplication: 260  FOX multiplication: 67
+==============================================
+Sync multiplication: 166  Stripe multiplication: 245  FOX multiplication: 58
+==============================================
+Sync multiplication: 162  Stripe multiplication: 237  FOX multiplication: 75
+==============================================
+Sync multiplication: 169  Stripe multiplication: 233  FOX multiplication: 61
+==============================================
+Sync multiplication: 170  Stripe multiplication: 273  FOX multiplication: 63
+==============================================
+Sync multiplication: 168  Stripe multiplication: 231  FOX multiplication: 58
+=============================================
+Sync multiplication: 166  Stripe multiplication: 234  FOX multiplication: 57
+==============================================
+Sync multiplication: 165  Stripe multiplication: 241  FOX multiplication: 76
+==============================================
+THREADS COUNT: 500 MATRIX SIZE: 500
+Sync: OptionalDouble[167.0]
+Stripe: OptionalDouble[249.0]
+Fox: OptionalDouble[65.6]
+-----------------------------------------
+
+
+
+
+
+EXPERIMENT FOR MATRIX SIZE 500 IS OVER!! 
+
+
+Sync multiplication: 1690  Stripe multiplication: 643  FOX multiplication: 257
+==============================================
+Sync multiplication: 1616  Stripe multiplication: 653  FOX multiplication: 255
+==============================================
+Sync multiplication: 1703  Stripe multiplication: 631  FOX multiplication: 263
+==============================================
+Sync multiplication: 1682  Stripe multiplication: 664  FOX multiplication: 263
+==============================================
+Sync multiplication: 1719  Stripe multiplication: 612  FOX multiplication: 253
+==============================================
+Sync multiplication: 1638  Stripe multiplication: 618  FOX multiplication: 262
+==============================================
+Sync multiplication: 1668  Stripe multiplication: 652  FOX multiplication: 302
+==============================================
+Sync multiplication: 1687  Stripe multiplication: 715  FOX multiplication: 324
+==============================================
+Sync multiplication: 1740  Stripe multiplication: 700  FOX multiplication: 308
+==============================================
+Sync multiplication: 1699  Stripe multiplication: 717  FOX multiplication: 322
+==============================================
+THREADS COUNT: 100 MATRIX SIZE: 1000
+Sync: OptionalDouble[1684.2]
+Stripe: OptionalDouble[660.5]
+Fox: OptionalDouble[280.9]
+-----------------------------------------
+
+
+Sync multiplication: 1685  Stripe multiplication: 850  FOX multiplication: 300
+==============================================
+Sync multiplication: 1732  Stripe multiplication: 877  FOX multiplication: 303
+==============================================
+Sync multiplication: 1688  Stripe multiplication: 856  FOX multiplication: 305
+==============================================
+Sync multiplication: 1678  Stripe multiplication: 899  FOX multiplication: 305
+==============================================
+Sync multiplication: 1675  Stripe multiplication: 861  FOX multiplication: 315
+==============================================
+Sync multiplication: 1740  Stripe multiplication: 850  FOX multiplication: 317
+==============================================
+Sync multiplication: 1774  Stripe multiplication: 890  FOX multiplication: 306
+==============================================
+Sync multiplication: 1677  Stripe multiplication: 873  FOX multiplication: 299
+==============================================
+Sync multiplication: 1701  Stripe multiplication: 844  FOX multiplication: 308
+==============================================
+Sync multiplication: 1792  Stripe multiplication: 847  FOX multiplication: 316
+==============================================
+THREADS COUNT: 250 MATRIX SIZE: 1000
+Sync: OptionalDouble[1714.2]
+Stripe: OptionalDouble[864.7]
+Fox: OptionalDouble[307.4]
+-----------------------------------------
+
+
+Sync multiplication: 1708  Stripe multiplication: 1052  FOX multiplication: 315
+==============================================
+Sync multiplication: 1619  Stripe multiplication: 1055  FOX multiplication: 327
+==============================================
+Sync multiplication: 1660  Stripe multiplication: 1108  FOX multiplication: 322
+==============================================
+Sync multiplication: 1681  Stripe multiplication: 1060  FOX multiplication: 310
+==============================================
+Sync multiplication: 1698  Stripe multiplication: 1112  FOX multiplication: 324
+==============================================
+Sync multiplication: 1724  Stripe multiplication: 1053  FOX multiplication: 320
+==============================================
+Sync multiplication: 1670  Stripe multiplication: 1071  FOX multiplication: 322
+==============================================
+Sync multiplication: 1726  Stripe multiplication: 1118  FOX multiplication: 333
+==============================================
+Sync multiplication: 1752  Stripe multiplication: 1073  FOX multiplication: 321
+==============================================
+Sync multiplication: 1749  Stripe multiplication: 1066  FOX multiplication: 318
+==============================================
+THREADS COUNT: 500 MATRIX SIZE: 1000
+Sync: OptionalDouble[1698.7]
+Stripe: OptionalDouble[1076.8]
+Fox: OptionalDouble[321.2]
+-----------------------------------------
+
+
+
+
+
+EXPERIMENT FOR MATRIX SIZE 1000 IS OVER!! 
+
+
+Sync multiplication: 60959  Stripe multiplication: 3004  FOX multiplication: 2608
+==============================================
+Sync multiplication: 67239  Stripe multiplication: 3147  FOX multiplication: 2719
+==============================================
+Sync multiplication: 60829  Stripe multiplication: 3126  FOX multiplication: 2904
+==============================================
+Sync multiplication: 67990  Stripe multiplication: 3176  FOX multiplication: 2680
+==============================================
+Sync multiplication: 64866  Stripe multiplication: 2987  FOX multiplication: 2568
+==============================================
+Sync multiplication: 60857  Stripe multiplication: 2971  FOX multiplication: 2463
+==============================================
+Sync multiplication: 60630  Stripe multiplication: 2911  FOX multiplication: 2557
+==============================================
+Sync multiplication: 58116  Stripe multiplication: 3000  FOX multiplication: 3050
+==============================================
+Sync multiplication: 62185  Stripe multiplication: 3456  FOX multiplication: 4198
+==============================================
+Sync multiplication: 62913  Stripe multiplication: 3292  FOX multiplication: 3988
+==============================================
+THREADS COUNT: 100 MATRIX SIZE: 2000
+Sync: OptionalDouble[62658.4]
+Stripe: OptionalDouble[3107.0]
+Fox: OptionalDouble[2973.5]
+-----------------------------------------
+
+
+Sync multiplication: 59879  Stripe multiplication: 4291  FOX multiplication: 2687
+==============================================
+Sync multiplication: 58135  Stripe multiplication: 4131  FOX multiplication: 2562
+==============================================
+Sync multiplication: 59891  Stripe multiplication: 4181  FOX multiplication: 2720
+==============================================
+Sync multiplication: 57647  Stripe multiplication: 3671  FOX multiplication: 2154
+==============================================
+Sync multiplication: 58074  Stripe multiplication: 4068  FOX multiplication: 2502
+==============================================
+Sync multiplication: 58432  Stripe multiplication: 3740  FOX multiplication: 2489
+==============================================
+Sync multiplication: 58160  Stripe multiplication: 3664  FOX multiplication: 2691
+==============================================
+Sync multiplication: 57490  Stripe multiplication: 4322  FOX multiplication: 2498
+==============================================
+Sync multiplication: 58261  Stripe multiplication: 3694  FOX multiplication: 2527
+==============================================
+Sync multiplication: 57893  Stripe multiplication: 3953  FOX multiplication: 3331
+==============================================
+THREADS COUNT: 250 MATRIX SIZE: 2000
+Sync: OptionalDouble[58386.2]
+Stripe: OptionalDouble[3971.5]
+Fox: OptionalDouble[2616.1]
+-----------------------------------------
+
+
+Sync multiplication: 59126  Stripe multiplication: 4825  FOX multiplication: 2166
+==============================================
+Sync multiplication: 58250  Stripe multiplication: 4970  FOX multiplication: 2172
+==============================================
+Sync multiplication: 57399  Stripe multiplication: 5158  FOX multiplication: 2259
+==============================================
+Sync multiplication: 58847  Stripe multiplication: 4867  FOX multiplication: 1842
+==============================================
+Sync multiplication: 59303  Stripe multiplication: 4972  FOX multiplication: 2549
+==============================================
+Sync multiplication: 58502  Stripe multiplication: 4570  FOX multiplication: 2067
+==============================================
+Sync multiplication: 57654  Stripe multiplication: 5297  FOX multiplication: 2052
+==============================================
+Sync multiplication: 58427  Stripe multiplication: 4694  FOX multiplication: 2234
+==============================================
+Sync multiplication: 58635  Stripe multiplication: 5482  FOX multiplication: 1856
+==============================================
+Sync multiplication: 58832  Stripe multiplication: 4903  FOX multiplication: 2340
+==============================================
+THREADS COUNT: 500 MATRIX SIZE: 2000
+Sync: OptionalDouble[58497.5]
+Stripe: OptionalDouble[4973.8]
+Fox: OptionalDouble[2153.7]
+-----------------------------------------
+
+
+
+
+
+EXPERIMENT FOR MATRIX SIZE 2000 IS OVER!! 
+
+
+
+Process finished with exit code 0
+=
